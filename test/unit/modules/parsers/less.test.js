@@ -1,13 +1,11 @@
-var requireModule = require('requirefrom')('lib/modules'),
-    chai = require('chai'),
-    expect = chai.expect,
-    parser = requireModule('parsers/less.js');
+import { expect } from 'chai';
+import parser from '~/lib/modules/parsers/less.js';
 
-describe('LESS parser', function() {
+describe('LESS parser', () => {
 
-  describe('finding used variables', function() {
+  describe('finding used variables', () => {
 
-    it('should return all used variables', function() {
+    it('should return all used variables', () => {
       var str = `        color: @mycolor1;
         .testStyle {
           border: 1px solid @mycolor2;
@@ -19,7 +17,7 @@ describe('LESS parser', function() {
       expect(parser.findVariables(str)).eql(result);
     });
 
-    it('should not return new variable definitions', function() {
+    it('should not return new variable definitions', () => {
       var str = `@mycolor: #00ff00;
         .testStyle {
           color: @mycolor2;
@@ -28,7 +26,7 @@ describe('LESS parser', function() {
       expect(parser.findVariables(str)).eql(result);
     });
 
-    it('should find variables that are used as function arguments', function() {
+    it('should find variables that are used as function arguments', () => {
       var str = `.testStyle {
           color: rgba(@mycolor, @myopacity);
         }`,
@@ -36,18 +34,11 @@ describe('LESS parser', function() {
       expect(parser.findVariables(str)).eql(result);
     });
 
-    it('should not find variables from variable declarations', function() {
-      var str = `.testStyle {
-          @sum: @var1 + @var2;
-        }`,
-      result = [];
-      expect(parser.findVariables(str)).eql(result);
-    });
   });
 
-  describe('finding variable declarations', function() {
+  describe('finding variable declarations', () => {
 
-    it('should parse basic variables', function() {
+    it('should parse basic variables', () => {
       var str = `@mycolor: #00ff00;
         @mypadding: 3px;
         @myfont:   "Helvetica Neue", Helvetica, Arial, sans-serif;`,
@@ -59,21 +50,33 @@ describe('LESS parser', function() {
       expect(parser.parseVariableDeclarations(str)).eql(result);
     });
 
-    it('should not detect variables that are only used not declarared', function() {
+    it('should not consider spaces', () => {
+      var str = `@mycolor :#00ff00;
+        @mymargin : 2em;
+        @mypadding: 3px;`,
+        result = [
+          {name: 'mycolor', value: '#00ff00', line: 1},
+          {name: 'mymargin', value: '2em', line: 2},
+          {name: 'mypadding', value: '3px', line: 3}
+        ];
+        expect(parser.parseVariableDeclarations(str)).eql(result);
+      });
+
+    it('should not detect variables that are only used not declarared', () => {
       var str = `.testStyle {
           color: @myvar;
         }`;
       expect(parser.parseVariableDeclarations(str)).eql([]);
     });
 
-    it('should not return variables that are used as function arguments', function() {
+    it('should not return variables that are used as function arguments', () => {
       var str = `.testStyle {
           color: rgba(@mycolor, @myopacity);
         }`;
       expect(parser.parseVariableDeclarations(str)).eql([]);
     });
 
-    it('should handle cases when variable value is another variable', function() {
+    it('should handle cases when variable value is another variable', () => {
       var str = `@var1: @another;`,
       result = [{
         name: 'var1',
@@ -83,7 +86,7 @@ describe('LESS parser', function() {
       expect(parser.parseVariableDeclarations(str)).eql(result);
     });
 
-    it('should parse variables from file with containing comments and intended lines', function() {
+    it('should parse variables from file with containing comments and intended lines', () => {
       var str = `@mycolor: #00ff00;
         // Test comment
           @mypadding: 3px; // Test comment 2
@@ -96,7 +99,7 @@ describe('LESS parser', function() {
       expect(parser.parseVariableDeclarations(str)).eql(result);
     });
 
-    it('should parse variables correct when there are multiple variables in a single line', function() {
+    it('should parse variables correct when there are multiple variables in a single line', () => {
       var str = '@color1: #ff0000; @color2: #00ff00; @color3: #0000ff;',
         result = [
           {name: 'color1', value: '#ff0000', line: 1},
@@ -106,7 +109,7 @@ describe('LESS parser', function() {
       expect(parser.parseVariableDeclarations(str)).eql(result);
     });
 
-    it('should not take commented variables', function() {
+    it('should not take commented variables', () => {
       var str = `@color1: #ff0000;
         // @color2: #00ff00;
         @color3: #0000ff;
@@ -118,13 +121,13 @@ describe('LESS parser', function() {
       expect(parser.parseVariableDeclarations(str)).eql(result);
     });
 
-    it('should not detect @import as a variable', function() {
+    it('should not detect @import as a variable', () => {
       var str = `@import 'file';`,
       result = [];
       expect(parser.parseVariableDeclarations(str)).eql(result);
     });
 
-    it('should accept variables named @import', function() {
+    it('should accept variables named @import', () => {
       var str = `@import: 3px;`,
       result = [
         {name: 'import', value: '3px', line: 1}
@@ -133,9 +136,9 @@ describe('LESS parser', function() {
     });
   });
 
-  describe('settings variables', function() {
+  describe('settings variables', () => {
 
-    it('should only change variable declaration', function() {
+    it('should only change variable declaration', () => {
       var str = `@primary-color: #fdf70a;
            .foo {
              background-color: @primary-color;
@@ -151,7 +154,7 @@ describe('LESS parser', function() {
       expect(changed).eql(result);
     });
 
-    it('should change single value variable', function() {
+    it('should change single value variable', () => {
       var str = `@mycolor: #00ff00;
            @mypadding: 3px;
            @myfont:   "Helvetica Neue", Helvetica, Arial, sans-serif;`,
@@ -166,7 +169,7 @@ describe('LESS parser', function() {
       expect(changed).eql(result);
     });
 
-    it('should change complex value variable', function() {
+    it('should change complex value variable', () => {
       var str = `@mycolor: #00ff00;
            @mypadding: 3px;
            @myfont:   "Helvetica Neue", Helvetica, Arial, sans-serif;`,
@@ -180,7 +183,7 @@ describe('LESS parser', function() {
       expect(changed).eql(result);
     });
 
-    it('should not change variable when declaration contains the same variable in the function', function() {
+    it('should not change variable when declaration contains the same variable in the function', () => {
       var str = `@mycolor: #0000ff;
            @another: lighten(@mycolor, 10%);`,
         variables = [
@@ -192,7 +195,7 @@ describe('LESS parser', function() {
       expect(changed).eql(result);
     });
 
-    it('should preserve indents', function() {
+    it('should preserve indents', () => {
       var str = `
            @mycolor: #00ff00;
 
@@ -208,7 +211,7 @@ describe('LESS parser', function() {
       expect(changed).eql(result);
     });
 
-    it('should preserve multiline comments', function() {
+    it('should preserve multiline comments', () => {
       var str = '' +
           '@mycolor: #00ff00;\n' +
           '/* Comment */\n' +

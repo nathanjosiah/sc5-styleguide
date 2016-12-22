@@ -1,3 +1,254 @@
+## 1.3.3 (2016-11-28)
+
+*** Feature 
+* showMarkupSection option added for show/hide markup section (#[1039](https://github.com/SC5/sc5-styleguide/pull/1039))
+*** Improvement
+* In mobile layout sidenav is hidden by default (#[1040](https://github.com/SC5/sc5-styleguide/pull/1040))
+
+
+## 1.3.2 (2016-11-17)
+
+*** Improvement
+* Improvements and bug fixes for side navigation (#[1034](https://github.com/SC5/sc5-styleguide/pull/1034))
+
+## 1.3.1 (2016-11-11)
+
+### Fixes
+* Allow trailing spaces in between KSS parameters. Fix#1027 (#[1031](https://github.com/SC5/sc5-styleguide/pull/1031))
+* Bump to socket.io 1.4.0 (#[1032](https://github.com/SC5/sc5-styleguide/pull/1032))
+
+### Internal
+* Officially support node@6.9. Fix#1025. (#[1026](https://github.com/SC5/sc5-styleguide/pull/1026))
+
+### Credits
+
+Thanks to [Marinho Brandão](https://github.com/marinho) for contribution into this release.
+
+## 1.3.0 (2016-11-04)
+
+### Features
+* Allow to run multiple styleguide servers on different ports. Fix #1019 (#[1021](https://github.com/SC5/sc5-styleguide/pull/1021))
+* Build option to disable server log. Fix #1007 (#[1022](https://github.com/SC5/sc5-styleguide/pull/1022))
+
+### Fixes
+* Fix#1017 Parse SCSS variable declarations without spaces (#[1018](https://github.com/SC5/sc5-styleguide/pull/1018))
+
+### Internal
+* Unit test for not considering spaces in variable definitions (#[1020](https://github.com/SC5/sc5-styleguide/pull/1020))
+
+## 1.2.0 (2016-09-16)
+
+### Fixes
+* Fix broken scrollbar on overview anchor tags and also fix navbar (#[1006](https://github.com/SC5/sc5-styleguide/pull/1006))
+
+### Improvement
+* Update gonzales-pe to a newer version (#[1002](https://github.com/SC5/sc5-styleguide/pull/1002))
+
+### Credits
+
+Thanks to [Sascha Egerer](https://github.com/sascha-egerer)
+for making this release happen.
+
+## 1.1.3 (2016-09-02)
+
+### Fixes
+* Fix to return the ocLazyLoading promise on resolve (#[998](https://github.com/SC5/sc5-styleguide/pull/998))
+* Fix sideNav undefined error in console (#[1004](https://github.com/SC5/sc5-styleguide/pull/1004))
+* Fix a styleguide styling issue regarding the $content-max-width scss variable (#[1003](https://github.com/SC5/sc5-styleguide/pull/1003))
+
+### Credits
+
+Thanks to [Camilo Vasco](https://github.com/kmilov) and [Alastair Hodgson] (https://github.com/stikoo)
+for making this release happen.
+
+## 1.1.2 (2016-08-23)
+
+### Improvements
+* fix navbar loading hiccups (#[994](https://github.com/SC5/sc5-styleguide/pull/994))
+
+### Fixes
+* fix the huge delay during gulp dev task (#[995](https://github.com/SC5/sc5-styleguide/pull/995))
+* fix Removed appRoot property from socket.io script src to stop 404 (#[989](https://github.com/SC5/sc5-styleguide/pull/989))
+
+### Credits
+
+Thanks to [Jim Doyle](https://github.com/superelement)
+for making this release happen.
+
+## 1.1.1 (2016-08-04)
+
+### Improvement
+* class name added to shadow-dom and section (#[985](https://github.com/SC5/sc5-styleguide/pull/985))
+
+## 1.1.0 (2016-08-03)
+
+### Features
+* Configurable dependencies (#[974](https://github.com/SC5/sc5-styleguide/pull/974))
+
+### Improvements
+* Avoid nested paragraphs in description (#[980](https://github.com/SC5/sc5-styleguide/pull/980))
+* #961 Tweak bemto.jade path dynamically (#[962](https://github.com/SC5/sc5-styleguide/pull/962))
+* Test for $var: $var; declarations in SCSS Fix #496.  (#[954](https://github.com/SC5/sc5-styleguide/pull/954))
+* enhanced custom styles accessibility to navbar by adding class names … (#[972](https://github.com/SC5/sc5-styleguide/pull/972))
+
+### Fixes
+* Fix angular-mocks version (#[973](https://github.com/SC5/sc5-styleguide/pull/973))
+* Scrolling from javascript not working when overflow: auto is set on body. (#[956](https://github.com/SC5/sc5-styleguide/pull/956), closes [#42](https://github.com/SC5/sc5-styleguide/issues/42))
+
+### Documentation
+* Typos in readme.md (#[971](https://github.com/SC5/sc5-styleguide/pull/971))
+* Link to a blog post about advanced adjustment (#[952](https://github.com/SC5/sc5-styleguide/pull/952))
+
+### Credits
+
+Thanks to [Gambit3](https://github.com/gambit3), [Marc](https://github.com/soulfresh).
+[Philippe Vayssière](https://github.com/PhilippeVay) and [Yutaro Miyazaki](https://github.com/vwxyutarooo)
+for making this release to happen.
+
+
+## 1.0.0 (2016-05-24)
+
+### Improvements
+* Use new version of gonzales and traverse for LESS (#[947](https://github.com/SC5/sc5-styleguide/pull/947))<br/>
+  Thanks to this change, we should get rid of many parsing bugs.
+* Upgrade packages (#[933](https://github.com/SC5/sc5-styleguide/pull/933))
+* Return server instance when calling styleguide.server() (#[948](https://github.com/SC5/sc5-styleguide/pull/948))
+* Fix css for search field (#[935](https://github.com/SC5/sc5-styleguide/pull/935))
+* Optimize filter setVariables (#[946](https://github.com/SC5/sc5-styleguide/pull/946))
+
+### Internal improvements
+* Test for !optional in SCSS. Fix #757 (#[950](https://github.com/SC5/sc5-styleguide/pull/950))
+* Test for @supports in CSS. Fix #944 (#[949](https://github.com/SC5/sc5-styleguide/pull/949))
+
+### Credits
+
+Thanks to [Sascha Egerer](https://github.com/sascha-egerer), [Matti Suur-Askola](https://github.com/mattisa) and
+[Marc](https://github.com/soulfresh) for making this release to happen!
+
+## 0.3.47 (2016-05-11)
+
+* Fix typo in README.md (#[936](https://github.com/SC5/sc5-styleguide/pull/936))
+* Section page displays subsection details links (#[938](https://github.com/SC5/sc5-styleguide/pull/938))
+* Additional links in the documentation (#[930](https://github.com/SC5/sc5-styleguide/pull/930))
+* Upgrade to angular 1.5 and latest phantomjs (#[924](https://github.com/SC5/sc5-styleguide/pull/924))
+
+## 0.3.46 (2016-04-20)
+
+### Features
+* Feature side navigation switch added (#[920](https://github.com/SC5/sc5-styleguide/pull/920))
+* Third navigation level added in side navigation (##[920](https://github.com/SC5/sc5-styleguide/pull/920))
+* Menu styles added for mobile view in side navigation (##[920](https://github.com/SC5/sc5-styleguide/pull/920))
+
+### Improvements
+* Prevent to load sections on main navigation level (##[920](https://github.com/SC5/sc5-styleguide/pull/920))
+
+## 0.3.45 (2016-03-21)
+
+### Features
+* Add possibility to have includes in jade markup (#[911](https://github.com/SC5/sc5-styleguide/pull/911))
+* Add ID attributes to quickly select sections and rendered markup. Fix #905 (#[906](https://github.com/SC5/sc5-styleguide/pull/906))
+
+### Internal improvements
+* Fix #904. Updating the babel package. (#[910](https://github.com/SC5/sc5-styleguide/pull/910))
+
+### Credits
+
+Thanks to [Matthew Shooks](https://github.com/shooksm) and [Quentin Devauchelle](https://github.com/Qt-dev) for making
+this release happen.
+
+## 0.3.44 (2016-03-02)
+
+* Add abbility to register custom processors to modify the styleguide data (#[899](https://github.com/SC5/sc5-styleguide/pull/899))
+* Helper for adding a new section. Fix #894 (#[897](https://github.com/SC5/sc5-styleguide/pull/897))
+
+### Fixes
+* Add missing jshint dependency (#[900](https://github.com/SC5/sc5-styleguide/pull/900))
+* Fix #895 render overview code blocks using angular-highlightjs markup (#[896](https://github.com/SC5/sc5-styleguide/pull/896))
+
+### Thanks
+
+Thanks to [Sascha Egerer](https://github.com/sascha-egerer) and [Matthew Shooks](https://github.com/shooksm) for
+helping this release happening!
+
+## 0.3.43 (2016-02-17)
+
+* Process CSS file with helpers (#[892](https://github.com/SC5/sc5-styleguide/pull/892))
+* Generate demo website in accord to new source. Fix #886 (#[889](https://github.com/SC5/sc5-styleguide/pull/889))
+
+## 0.3.42 (2016-02-15)
+
+### Improvements
+* **Use PostCSS for customizing the view.** Fix #881. (#[883](https://github.com/SC5/sc5-styleguide/pull/883))<br/>
+  *Good news: SC5 StyleGuide does not require any SASS in your environment!*<br/>
+  If you provide `customColors` options to modify the SC5 StyleGuide view, note that from now one it does not
+  require any SASS. Instead we use PostCSS with all the needed plugins. You will require to change the mixin
+  declaration of `styleguide_custom_styles` to:
+
+  ```css
+  @define-mixin styleguide_custom_styles {
+    /* Define your styles here */
+  }
+  ```
+
+  You are free to use all the PostCSS features provided by plugins: nesting, variables, media, mixins, color
+  calculations.<br/>
+  Redefining SC5 StyleGuide variables did not change, the SASS-like syntax still works.
+* Possibility to use complex wrappers. Fix #877. (#[878](https://github.com/SC5/sc5-styleguide/pull/878))
+
+### Fixes
+* Missing npm module doe local cache (#[880](https://github.com/SC5/sc5-styleguide/pull/880))
+* Adding styles for table. (#[869](https://github.com/SC5/sc5-styleguide/pull/869))
+
+### Documentation
+* Do not recommend to run sc5-styleguide as a command line (#[879](https://github.com/SC5/sc5-styleguide/pull/879))
+* Fixed broken links in demo (section 3.5) (#[860](https://github.com/SC5/sc5-styleguide/pull/860))
+
+### Internal
+* Use ES6 modules for unit tests (#[862](https://github.com/SC5/sc5-styleguide/pull/862))
+* Jade cache, level 2  (#[865](https://github.com/SC5/sc5-styleguide/pull/865))
+
+## 0.3.41 (2015-12-09)
+
+### Features
+* Use PostCSS parser to split comment and code blocks. Fix #856 (#[857](https://github.com/SC5/sc5-styleguide/pull/857))
+* Options to inject custom HTML in beginning or in the end of <body> tag (#[849](https://github.com/SC5/sc5-styleguide/pull/849))
+* Replace inserts in wrappers (#[847](https://github.com/SC5/sc5-styleguide/pull/847))
+
+### Internal
+
+* Output good wishes for those who release on friday (#[837](https://github.com/SC5/sc5-styleguide/pull/837))
+* Added npm install and gulp update to DEVELOPMENT.md. fix #853 #852 (#[854](https://github.com/SC5/sc5-styleguide/pull/854))
+
+## 0.3.40 (2015-11-25)
+
+### Features
+* Mark the menu as active if its subsection is currently showed. Fix #747 (#[843](https://github.com/SC5/sc5-styleguide/pull/843))
+* Support node 0.12 and 4.2 (#[834](https://github.com/SC5/sc5-styleguide/pull/834))
+
+### Fixes
+* Update gulp-pleeease for node@4.x. Fix #828. (#[833](https://github.com/SC5/sc5-styleguide/pull/833))
+
+### Internal
+* Don´t run clean when building for dev (#[845](https://github.com/SC5/sc5-styleguide/pull/845))
+* Update dependencies (#[842](https://github.com/SC5/sc5-styleguide/pull/842))
+* Run clean task before build to remove previous build results (#[841](https://github.com/SC5/sc5-styleguide/pull/841))
+* Process sass files before giving them to styleguide for applying (#[840](https://github.com/SC5/sc5-styleguide/pull/840))
+
+## 0.3.39 (2015-11-10)
+
+### Features
+* BEM+Jade support in HTML<br/>
+  Thanks to [Gleb Mikheev](https://github.com/glebmachine)
+
+### Fixes
+
+* Use ES6 arrow functions for tests and gulp (#[817](https://github.com/SC5/sc5-styleguide/pull/817))
+
+### Internal
+
+* Install the packages from npm (#[827](https://github.com/SC5/sc5-styleguide/pull/827))
+* Fix #783. Process table tags in markdown (#[823](https://github.com/SC5/sc5-styleguide/pull/823))
+
 ## 0.3.37 (2015-10-08)
 
 * Fix #807. Typo in code (#[813](https://github.com/SC5/sc5-styleguide/pull/813))

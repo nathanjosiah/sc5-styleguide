@@ -1,7 +1,7 @@
-## 0.3.37 (2015-10-12)
+## 1.3.3 (2016-11-28)
 
-* Fix #807. Typo in code (#[813](https://github.com/SC5/sc5-styleguide/pull/813))
-* Get rid of "multiline" package and use ES6 feature instead (#[814](https://github.com/SC5/sc5-styleguide/pull/814))
-* Teach sg-insert to include components with modifiers (#[808](https://github.com/SC5/sc5-styleguide/pull/808))<br/>
-  Thanks [Thomas Kräftner](https://github.com/kraftner)
-* Implement read-only mode. Possibility to disable variable saving (#[806](https://github.com/SC5/sc5-styleguide/pull/806))
+*** Feature 
+* showMarkupSection option added for show/hide markup section (#[1039](https://github.com/SC5/sc5-styleguide/pull/1039))
+*** Improvement
+* In mobile layout sidenav is hidden by default (#[1040](https://github.com/SC5/sc5-styleguide/pull/1040))
+

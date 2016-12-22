@@ -1,16 +1,14 @@
-var requireModule = require('requirefrom')('lib/modules'),
-    chai = require('chai'),
-    expect = chai.expect,
-    replaceSectionReferences = requireModule('section-references').replace;
+import { expect } from 'chai';
+import { replace as replaceSectionReferences } from '~/lib/modules/section-references';
 
-describe('Processing section references in the markup', function() {
+describe('Processing section references in the markup', () => {
 
   var json = {},
     removeLinebreaks = function(text) {
       return text.replace(/(\r\n|\n|\r)/gm, '');
     };
 
-  beforeEach(function() {
+  beforeEach(() => {
     var section = [];
     section[0] = {},
     section[0].markup = `<div>1.0</div>`,
@@ -36,6 +34,7 @@ describe('Processing section references in the markup', function() {
 <sg-insert>4.1-10</sg-insert>`,
     section[8] = {},
     section[8].markup = `<sg-insert>4.1-all</sg-insert>`;
+    section[8]['sg-wrapper'] = `<sg-insert>1.0</sg-insert>`;
 
     json = {
       sections: [{
@@ -97,35 +96,39 @@ describe('Processing section references in the markup', function() {
           description: '',
           reference: '4.3',
           modifiers: [],
-          markup: section[8].markup
+          markup: section[8].markup,
+          'sg-wrapper': section[8]['sg-wrapper']
       }]
     };
     json.sections = replaceSectionReferences(json.sections);
   });
 
-  it('should replace section reference', function() {
+  it('should replace section reference', () => {
     var replacedRefs = '<div>1.0</div>';
     expect(removeLinebreaks(json.sections[1].markup)).eql(replacedRefs);
   });
 
-  it('should replace several sections', function() {
+  it('should replace several sections', () => {
     var replacedRefs = '<div>1.0</div><div>2.1</div>';
     expect(removeLinebreaks(json.sections[3].markup)).eql(replacedRefs);
   });
 
-  it('should process nested replacements', function() {
+  it('should process nested replacements', () => {
     var replacedRefs = '<div class="even-better">  <div class="nice">  <div>1.0</div></div></div>';
     expect(removeLinebreaks(json.sections[5].markup)).eql(replacedRefs);
   });
 
-  it('should replace modifier references when valid', function() {
+  it('should replace modifier references when valid', () => {
     var replacedRefs = '<div style="background:modifier1;">modifier1</div><div style="background:;"></div>';
     expect(removeLinebreaks(json.sections[7].markup)).eql(replacedRefs);
   });
 
-  it('should replace modifier reference with all modifiers', function() {
+  it('should replace modifier reference with all modifiers', () => {
     var replacedRefs = '<div style="background:modifier1;">modifier1</div><div style="background:modifier2;">modifier2</div>';
     expect(removeLinebreaks(json.sections[8].markup)).eql(replacedRefs);
   });
-
+  it('should replace section reference in sg-wrapper', () => {
+    var replacedRefs = '<div>1.0</div>';
+    expect(removeLinebreaks(json.sections[8]['sg-wrapper'])).eql(replacedRefs);
+  });
 });

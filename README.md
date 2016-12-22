@@ -10,16 +10,19 @@ using KSS notation. It can be used as a command line utility, gulp task or Grunt
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
+
 - [Usage](#usage)
-  - [As a command line tool](#as-a-command-line-tool)
+  - [Prerequisites](#prerequisites)
   - [With gulp](#with-gulp)
   - [With Grunt](#with-grunt)
+  - [As a command line tool](#as-a-command-line-tool)
   - [Build options](#build-options)
 - [Documenting syntax](#documenting-syntax)
   - [Defining an Angular directive](#defining-an-angular-directive)
   - [Ignore parts of the stylesheet from being processed](#ignore-parts-of-the-stylesheet-from-being-processed)
   - [Wrapper markup](#wrapper-markup)
   - [Inserted markup](#inserted-markup)
+  - [Jade markup](#jade-markup)
 - [Designer tool](#designer-tool)
 - [Images, fonts and other static assets](#images-fonts-and-other-static-assets)
 - [Tips and pointers](#tips-and-pointers)
@@ -27,44 +30,28 @@ using KSS notation. It can be used as a command line utility, gulp task or Grunt
   - [Providing additional CSS](#providing-additional-css)
   - [Providing additional JavaScript](#providing-additional-javascript)
   - [onRendered event](#onrendered-event)
+  - [Adding new section in between](#adding-new-section-in-between)
 - [Demo](#demo)
+- [Additional Info](#additional-info)
+  - [Articles, blog posts](#articles-blog-posts)
+  - [Supplementary packages](#supplementary-packages)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Usage
+
 
 You should familiarize yourself with both [KSS](https://github.com/kneath/kss)
 and [node-kss](https://github.com/kss-node/kss-node) to get yourself started.
 
 SC5 Style guide provides additions to KSS syntax which you can learn [below](#user-content-documenting-syntax).
 
-### As a command line tool
+### Prerequisites
 
-Install plugin globally:
+The tool should be installed onto:
 
-```bash
-npm install -g sc5-styleguide
-```
-
-Styleguide command line tool required two sets of source files:
-
-`--kss-source`: Unprocessed files containing the KSS markup and LESS/SASS variables
-
-`--style-source` Preprosessed/compiled stylesheets to be used in the styleguide
-
-Example usage:
-
-```bash
-styleguide --kss-source "sass/*.scss" --style-source "public/*.css" --output styleguide --watch --server
-```
-
-You need to either specify a single directory or you can specify one or more source directories with one or more --kss-source flags.
-
-```bash
-styleguide --kss-source "sass/*.scss" --kss-source "style/*.scss" --style-source "public/*.css" --output styleguide --watch --server
-```
-
-Other options parameters are defined in the [Build options](#build-options) section.
+- node 0.12.x
+- node 4.2.x
 
 ### With gulp
 
@@ -176,9 +163,39 @@ the resultant CSS into styleguide's gulp tasks.
 
 For more specific documentation see the next section.
 
+### As a command line tool
+
+This way is less recommended as it less helps with introducing the styleguide into the day-to-day process.
+
+Install plugin globally:
+
+```bash
+npm install -g sc5-styleguide
+```
+
+Styleguide command line tool requires two sets of source files:
+
+`--kss-source`: Unprocessed files containing the KSS markup and LESS/SASS variables
+
+`--style-source` Preprocessed/compiled stylesheets to be used in the styleguide
+
+Example usage:
+
+```bash
+styleguide --kss-source "sass/*.scss" --style-source "public/*.css" --output styleguide --watch --server
+```
+
+You need to either specify a single directory or you can specify one or more source directories with one or more --kss-source flags.
+
+```bash
+styleguide --kss-source "sass/*.scss" --kss-source "style/*.scss" --style-source "public/*.css" --output styleguide --watch --server
+```
+
+Other options parameters are defined in the [Build options](#build-options) section.
+
 ### Build options
 
-CLI and gulp options accepts identically named parameters
+CLI and gulp options accept identically named parameters
 
 <a name="option-title"></a>
 **title** (string, optional)
@@ -188,7 +205,32 @@ This string is used as a page title and in the page header
 <a name="option-extraHead"></a>
 **extraHead** (array or string, optional)
 
-These HTML elements are injected inside the style guide head-tag.
+These HTML elements are injected inside the style guide `head` tag.
+
+<a name="option-sideNav"></a>
+**sideNav** (boolean, optional, default: false)
+
+Enables side navigation. When this option parameter is enabled, style guide will switch to side navbar.
+
+<a name="option-showMarkupSection"></a>
+**showMarkupSection** (boolean, optional, default: true)
+
+Show/hide Markup section.
+
+<a name="option-beforeBody"></a>
+**beforeBody** (array or string, optional)
+
+These HTML elements are injected inside the style guide `<body>` tag, before any other content.
+
+<a name="option-afterBody"></a>
+**afterBody** (array or string, optional)
+
+These HTML elements are injected inside the style guide `<body>` tag, after any other content.
+
+<a name="option-afterSections"></a>
+**afterSections** (array or string, optional)
+
+These HTML elements are injected inside the style guide `.sg-body` section, after any other content.
 
 <a name="option-commonClass"></a>
 **commonClass** (string or array of strings, optional)
@@ -200,12 +242,17 @@ This option is useful if you have some namespace classes that should to be added
 **server** (boolean, optional)
 
 Enable built-in web-server. To enable Designer tool the style guide must be served with the built-in web server.
-The server has also ability to refresh changed styles or KSS markup without doing a full page reload.
+The server also has the ability to refresh changed styles or KSS markup without doing a full page reload.
 
 <a name="option-port"></a>
 **port** (number, optional)
 
 Port of the server. Default is 3000.
+
+<a name="option-disableServerLog"></a>
+**disableServerLog** (boolean, optional)
+
+Disables embedded server log.
 
 <a name="option-rootPath"></a>
 **rootPath** (string, optional)
@@ -259,11 +306,18 @@ Disable variable saving from web interface.
 <a name="option-customColors"></a>
 **customColors** (string, optional)
 
-Path to file that defines custom UI color overrides using SASS variables. See all possible variables [here](https://github.com/SC5/sc5-styleguide/blob/master/lib/app/sass/_styleguide_variables.scss).
-
-The directory of of customColors file is included to SASS `includePaths` so it is possible to `@import` also external stylesheets.
+Path to file that defines custom UI color overrides using PostCSS variables. See all possible variables [here](https://github.com/SC5/sc5-styleguide/blob/master/lib/app/css/_styleguide_variables.css).
 
 Internal styles could be overriden by defining new styles inside the `styleguide_custom_styles` mixin. This mixin is added to the end of the application stylesheet.
+
+You can define your own styles with
+
+```css
+@define-mixin styleguide_custom_styles {
+  /* Define your styles here */
+}
+```
+PostCSS configuration supports mixins, nesting, valiables, media queries.
 
 <a name="option-parsers"></a>
 **parsers** (object, optional)
@@ -289,10 +343,45 @@ For example, to parse all .css files using postcss parser, following configurati
 }
 ```
 
+<a name="option-styleguideProcessors"></a>
+**styleguideProcessors** (object, optional)
+
+default:
+
+```js
+styleguideProcessors: {}
+```
+
+Styleguide has several processors that enrich or modify the data. For example the `sg-wrapper` replacement is done by a processor.
+You can add your own processor to enrich the styleguide data with your own content or modifications.
+You can also override existing functionality by overwriting the related processor.
+Currently these processors exist by default and should not be overwritten unless you know what you are doing:
+
+```js
+styleguideProcessors: {
+    10: replaceSectionReferences,
+    20: generateSectionWrapperMarkup
+}
+```
+
+You can define your own processors:
+
+```js
+styleguideProcessors: {
+  11: function(styleguide) {
+    // this will run after replaceSectionReferences
+    styleguide.sections[0].description = styleguide.sections[0].description + ' [Description from custom Processor]';
+  },
+  30: function(styleguide) {
+    // this will run after generateSectionWrapperMarkup
+  }
+}
+```
+
 <a name="option-filesConfig"></a>
 **filesConfig** (array, optional) **(Experimental feature)**
 
-All HTML markup sections defined in the KSS block is dynamically compiled inside the styleguide thus it is possibly to use Angular directive inside the markup. These external directives are lazy loaded in the styleguide Angular application. `filesConfig` configuration parameter could be used to define lazy loaded files. Files are only required, not copied automatically. You need make sure that files are copied inside the styleguide output directory when generating the styleguilde.
+All HTML markup sections defined in the KSS block is dynamically compiled inside the styleguide thus it is possible to use Angular directive inside the markup. These external directives are lazy loaded in the styleguide Angular application. `filesConfig` configuration parameter could be used to define lazy loaded files. Files are only required, not copied automatically. You need to make sure that files are copied inside the styleguide output directory when generating the styleguide.
 
 Configuration array containing paths to the dependencies of the hosted application
 
@@ -311,6 +400,34 @@ filesConfig: [
 ```
 
 Note: When using templateUrl in directives, the template path is relative to style guide index.html, not the hosted application root.
+
+**additionalNgDependencies** (array or string, optional)
+
+Some angular libraries (such as angular-material) can't be lazy loaded after bootstrapping.
+You can use the additionalNgDependencies property to inject additional angular
+dependencies to be bootstrapped by the style guide app.
+
+You can pass either a string (if you only have one dependency to add) or
+an array of strings. The string(s) should be the same dependencies you would
+pass when bootstrapping dependencies in your own modules.
+
+When using this property, you should also specify an afterBody or extraHead
+config in order to make sure the dependencies are loaded by the browser before
+they are bootstrapped.
+
+Here's an example showing how to use angular-material:
+
+```js
+additionalNgDependencies: ['ngMaterial']
+extraHead: '
+  <link rel="stylesheet" href="/angular-material/angular-material.css">
+'
+afterBody: '
+  <script src="/angular-aria/angular-aria.js"></script>
+  <script src="/angular-messages/angular-messages.js"></script>
+  <script src="/angular-material/angular-material.js"></script>
+'
+```
 
 ## Documenting syntax
 
@@ -476,12 +593,37 @@ In the markup you can insert markup of the other sections by referring to its se
 // List item
 //
 // markup:
-// <li>Item<li>
+// <li>Item</li>
 //
 // Styleguide 1.2.1
 ```
 
 At the generated website the markup is shown expanded.
+
+### Jade markup
+Set `enableJade: true` to enable JADE support with BEM (bemto: https://github.com/kizu/bemto).
+HTML supports with enabled Jade.
+
+Gulpfile.js
+```js
+gulp.task('styleguide:generate', function() {
+  return gulp.src('*.css')
+    .pipe(styleguide.generate({
+        ...
+        enableJade: true
+        ...
+      }))
+    .pipe(gulp.dest(outputPath));
+});
+```
+
+```css
+/*
+Markup:
++b.block_modifier(class="{$modifiers}")
+  +e.element
+*/
+```
 
 ## Designer tool
 
@@ -494,9 +636,9 @@ source files and an error notification is shown on the client.
 
 ## Images, fonts and other static assets
 
-Images, fonts and other static assets should be copied to style guide output folder to make them accessible in the style guide. It is recommended to create a gulp or Grunt task to do the copying always when the style guide is generated.
+Images, fonts and other static assets should be copied to style guide output folder to make them accessible in the style guide. It is recommended to create a gulp or Grunt task to systematically do the copying when the style guide is generated.
 
-If you modify you assets in gulp streams, you can add styleguide output directory as a second destination for your assets:
+If you modify your assets in gulp streams, you can add styleguide output directory as a second destination for your assets:
 
 ```js
 gulp.task('images', function() {
@@ -512,7 +654,7 @@ gulp.task('images', function() {
 ### `<html>` and `<body>` styles
 
 Since each component's markup is isolated from the application styles with Shadow DOM, styles defined in
-`<html>` or `<body>` tags will not apply in the component previews. If you want to for example define a font that should
+`<html>` or `<body>` tags will not apply in the component previews. If you want for example to define a font that should
 also be used in the component previews, define a css class with the font definitions and add that class to the
 [commonClass configuration option](#option-commonClass).
 
@@ -547,7 +689,7 @@ gulp.task('styleguide:applystyles', function() {
 
 ### Providing additional JavaScript
 
-To provide additional JavaScript for the StyleGuide pages, define its `<script>` tas in the `extraHead` parameter:
+To provide additional JavaScript for the StyleGuide pages, define its `<script>` tag in the `extraHead` parameter:
 
 ```js
 gulp.task('styleguide:generate', function() {
@@ -579,7 +721,7 @@ This way you can enrich the documented components with JavaScript. Keep in mind 
 
 The components get visible onto the StyleGuide pages dynamically. This means that it takes some time to render them.
 
-In your JavaScript you need to operate components after they had been rendered. Catch `styleguide:onRendered` event on `window` for that:
+In your JavaScript you may need to operate components after they have been rendered. Catch `styleguide:onRendered` event on `window` for that:
 
 ```js
 $(window).bind("styleguide:onRendered", function(e) {
@@ -588,7 +730,7 @@ $(window).bind("styleguide:onRendered", function(e) {
 });
 ```
 
-This is useful when you need to initialize your components. As this kind of initializing is only needed on the StyleGuide pages, you can provide it with an additional file:
+This is useful when you need to initialize your components. As this kind of initialization is only needed on the StyleGuide pages, you can provide it with an additional file:
 
 ```js
 extraHead: [
@@ -596,6 +738,40 @@ extraHead: [
   '<script src="/js/init-styleguide.js"></script>'
 ]
 ```
+
+### Adding new section in between
+
+You may use `addSection` helper in order to make it easier adding a new section (or subsection) in between of the existing. It shifts reference numbers of the following sections. To create a helping task, write this:
+
+```js
+gulp.task("styleguide:addsection", function() {
+  return gulp.src('path/to/components/**/*.less')
+    .pipe(styleguide.addSection())
+    .pipe(gulp.dest('path/to/components/'))
+});
+```
+
+Use this task with the parameters:
+
+```
+>  gulp styleguide:new-section --name=NewSection --order=6.2.1
+```
+
+**IMPORTANT**: Check diff after doing this change!
+
+**NOTE**: The tool also makes KSS comment block for a new section if it knows which file it should belong.
+
+The `addSection` method is parametrized, you may tell which parser to use for the files with certain extension (by analogy to `generate` helper):
+
+```
+.pipe(styleguide.addSection({
+  parsers: {
+    scss: 'sass'
+  }
+}))
+```
+
+**NOTE**: Be careful with `postcss` parser. It may not preserve new lines and indents.
 
 ## Demo
 
@@ -610,3 +786,19 @@ Note: If you installed style guide by cloning repository directly instead of npm
 The demo generates style guide to `demo-output` directory.
 
 Point your browser to <http://localhost:3000>
+
+## Additional Info
+
+### Articles, blog posts
+
+* [article] [Visual regression tests for SC5 StyleGuide](https://sc5.io/posts/visual-regression-testing/)
+* [article] [Automating Style Guide-Driven Development @ SmashingMagazine](https://www.smashingmagazine.com/2015/03/automating-style-guide-driven-development/)
+* [blog post] [Styleguide the Smaller Things](http://varya.me/en/posts/sc5-styleguide-for-smallers/)
+* [article] [Advanced techniques for the SC5 styleguide generator](https://www.alleyinteractive.com/blog/advanced-techniques-for-the-sc5-styleguide-generator/)
+* [blog post] [Living SC5 Styleguide, the next level](http://varya.me/en/posts/sc5-style-guide-next-level/)
+* [conference talk] [Driving Style Guide-Driven Development](https://youtu.be/gWzYMJjtx-Y)
+
+### Supplementary packages
+
+* [sc5-styleguide-visualtest](https://github.com/SC5/sc5-styleguide-visualtest)
+

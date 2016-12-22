@@ -1,13 +1,11 @@
 //jscs:disable disallowTrailingWhitespace
 //jscs:disable disallowMultipleLineBreaks
-var requireModule = require('requirefrom')('lib/modules'),
-    chai = require('chai'),
-    expect = chai.expect,
-    kssSanitizer = requireModule('kss-sanitize-params');
+import { expect } from 'chai';
+import kssSanitizer from '~/lib/modules/kss-sanitize-params';
 
-describe('KSS sanitizer', function() {
-  describe('Single line comments', function() {
-    it('should sanitize sg-prefixed parameter', function() {
+describe('KSS sanitizer', () => {
+  describe('Single line comments', () => {
+    it('should sanitize sg-prefixed parameter', () => {
       // jscs:disable
       var str = `// Test
 //
@@ -24,7 +22,7 @@ describe('KSS sanitizer', function() {
 
     });
 
-    it('should sanitize not sanitize other parameters', function() {
+    it('should sanitize not sanitize other parameters', () => {
       // jscs:disable
       var str = `// Test
 //
@@ -42,7 +40,7 @@ describe('KSS sanitizer', function() {
 
     });
 
-    it('should sanitize not sanitize the whole paragraph', function() {
+    it('should sanitize not sanitize the whole paragraph', () => {
       // jscs:disable
       var str = `// Test
 //
@@ -62,7 +60,7 @@ describe('KSS sanitizer', function() {
 
     });
 
-    it('should allow spaces in empty strings', function() {
+    it('should allow spaces in empty strings', () => {
       // jscs:disable
       var str = `// Test
 //
@@ -79,9 +77,9 @@ describe('KSS sanitizer', function() {
       expect(sanitized).eql(result);
     });
   });
-  describe('Multi line comments', function() {
+  describe('Multi line comments', () => {
 
-    it('should sanitize sg-prefixed parameter', function() {
+    it('should sanitize sg-prefixed parameter', () => {
       // jscs:disable
       var str = `/*
 Test

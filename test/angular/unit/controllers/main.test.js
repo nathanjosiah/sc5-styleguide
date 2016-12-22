@@ -23,7 +23,8 @@ describe('Controller: MainCtrl', function() {
       },
       config: {
         data: {
-          title: 'Page Title'
+          title: 'Page Title',
+          showMarkupSection: true
         }
       }
     };
@@ -74,7 +75,32 @@ describe('Controller: MainCtrl', function() {
   });
 
   it('should have markup shown by default', function() {
-    expect(scope.markupSection.isVisible).to.eql(true);
+    expect(scope.markupSection.isVisible).to.eql(styleguideData.config.data.showMarkupSection);
+  });
+
+  describe('toggle sideNav', function() {
+    it('should inverse boolean', function() {
+      scope.showMenu = true;
+      expect(scope.toggleSideNav(scope.showMenu)).to.eql(false);
+    });
+  });
+
+  describe('Navigation', function() {
+    it('should return sideNav string if sideNav configuration option is set', function() {
+      scope.config.data.sideNav = true;
+      expect(scope.isSideNav()).to.eql('sideNav');
+    });
+    it('should return topNav string if sideNav configuration option is not set', function() {
+      scope.config.data.sideNav = false;
+      expect(scope.isSideNav()).to.eql('topNav');
+    });
+  });
+
+  describe('sideNav configuration option true', function() {
+    it('should return sideNav if sideNav configuration option is set true', function() {
+      scope.config.data.sideNav = true;
+      expect(scope.isSideNav()).to.eql('sideNav');
+    });
   });
 
   it('should change markup visibility when toggling state', function() {
@@ -106,6 +132,10 @@ describe('Controller: MainCtrl', function() {
     it('should return false for sub sections', function() {
       expect(scope.filterMainSections()({reference: '1.2'})).to.eql(false);
       expect(scope.filterMainSections()({reference: '1.1.2'})).to.eql(false);
+    });
+
+    it('should return true if section has sub section', function() {
+      expect(scope.hasSubsections({reference: '1'})).to.eql(true);
     });
 
     it('should return false for undefined reference', function() {

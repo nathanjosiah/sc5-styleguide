@@ -1,14 +1,12 @@
 //jscs:disable disallowTrailingWhitespace
 //jscs:disable disallowMultipleLineBreaks
-var requireModule = require('requirefrom')('lib/modules'),
-    chai = require('chai'),
-    expect = chai.expect,
-    kssSplitter = requireModule('kss-splitter');
+import { expect } from 'chai';
+import kssSplitter from '~/lib/modules/kss-splitter';
 
-describe('KSS splitter', function() {
+describe('KSS splitter', () => {
 
-  describe('Splitter module', function() {
-    it('Split 2 blocks of singleline comments', function() {
+  describe('Splitter module', () => {
+    it('Split 2 blocks of singleline comments', () => {
       // jscs:disable
       var str = `// Comment1
 // Comment1
@@ -29,8 +27,8 @@ describe('KSS splitter', function() {
     });
   });
 
-  describe('Singleline comment declarations', function() {
-    it('should parse single KSS block', function() {
+  describe('Singleline comment declarations', () => {
+    it('should parse single KSS block', () => {
       // jscs:disable
       var str = `// Comment
 // Styleguide 1.0
@@ -47,7 +45,7 @@ describe('KSS splitter', function() {
       expect(kssBlocks).eql(result);
     });
 
-    it('should be agnostic to spaces in reference declaration', function() {
+    it('should be agnostic to spaces in reference declaration', () => {
       var str = `// Comment
 //Styleguide 1.0
 
@@ -63,7 +61,7 @@ describe('KSS splitter', function() {
       expect(kssBlocks).eql(result);
     });
 
-    it('should take multiline code', function() {
+    it('should take multiline code', () => {
       // jscs:disable
       var str = `// Comment
 //Styleguide 1.0
@@ -83,7 +81,7 @@ $a: b;
       expect(kssBlocks).eql(result);
     });
 
-    it('should allow code blocks to have not KSS comments', function() {
+    it('should allow code blocks to have not KSS comments', () => {
       // jscs:disable
       var str = `// Comment
 //Styleguide 1.0
@@ -104,7 +102,7 @@ $a: b;
       expect(kssBlocks).eql(result);
     });
 
-    it('should parse several blocks', function() {
+    it('should parse several blocks', () => {
       // jscs:disable
       var str = `// Comment1
 // Styleguide 1.0
@@ -130,7 +128,7 @@ $a: b;
       expect(kssBlocks).eql(result);
     });
 
-    it('should parse several blocks 2', function() {
+    it('should parse several blocks 2', () => {
       // jscs:disable
       var str = `@import "test";
 // Comment
@@ -170,7 +168,7 @@ $a: b;
       expect(kssBlocks).eql(result);
     });
 
-    it('should allow blocks with no code', function() {
+    it('should allow blocks with no code', () => {
       // jscs:disable
       var str = `// Comment1
 // Styleguide 1.0
@@ -203,7 +201,7 @@ $a: b;
       expect(kssBlocks).eql(result);
     });
 
-    it('should take any reference number', function() {
+    it('should take any reference number', () => {
       // jscs:disable
       var str = `// Comment
 // Styleguide 1
@@ -234,7 +232,7 @@ $a: b;
       expect(kssBlocks).eql(result);
     });
 
-    it('should take code before first KSS block', function() {
+    it('should take code before first KSS block', () => {
       // jscs:disable
       var str = `.x { y: x }
 
@@ -258,9 +256,9 @@ $a: b;
     });
   });
 
-  describe('Multiline comment declarations', function() {
+  describe('Multiline comment declarations', () => {
 
-    it('should parse single KSS block in multiline comments', function() {
+    it('should parse single KSS block in multiline comments', () => {
       var str = `/* Comment
 Styleguide 1.0
 */
@@ -280,7 +278,7 @@ Styleguide 1.0
       expect(kssBlocks).eql(result);
     });
 
-    it('should parse multiline KSS with no ending linebreak', function() {
+    it('should parse multiline KSS with no ending linebreak', () => {
       var str = `/* Comment
 Styleguide 1.0    */
 .a { b: c }`,
@@ -295,7 +293,7 @@ Styleguide 1.0    */`,
       kssBlocks = kssSplitter.getBlocks(str);
       expect(kssBlocks).eql(result);
     });
-    it('should parse multiline KSS with string prefixes', function() {
+    it('should parse multiline KSS with string prefixes', () => {
       var str = `/* Comment
  * Styleguide 1.0
 */
@@ -312,7 +310,7 @@ Styleguide 1.0    */`,
       expect(kssBlocks).eql(result);
     });
 
-    it('should allow code blocks to have multiline comments', function() {
+    it('should allow code blocks to have multiline comments', () => {
       // jscs:disable
       var str = `// Comment
 //Styleguide 1.0
@@ -331,7 +329,7 @@ Styleguide 1.0    */`,
       expect(kssBlocks).eql(result);
     });
 
-    it('should parse several KSS blocks with multiline comments', function() {
+    it('should parse several KSS blocks with multiline comments', () => {
       var str = '/*\n' +
   'Comment1\n' +
   'Styleguide 1.0\n' +
@@ -357,9 +355,9 @@ Styleguide 1.0    */`,
     });
   });
 
-  describe('tricky CSS content', function() {
+  describe('tricky CSS content', () => {
 
-    it('should swallow content property with multiline comment', function() {
+    it('should swallow content property with multiline comment', () => {
       // jscs:disable
       var str = `// Comment
 // Styleguide 1.0
@@ -384,7 +382,7 @@ a:before { content: "/* ..." }
       expect(kssBlocks).eql(result);
     });
 
-    it('should swallow content property with singleline comment', function() {
+    it('should swallow content property with singleline comment', () => {
       // jscs:disable
       var str = `a:before { content: "// Comment inside content" }
 
@@ -405,7 +403,7 @@ a:before { content: "/* ..." }
       expect(kssBlocks).eql(result);
     });
 
-    it('should allow LESS with escaped function argument', function() {
+    it('should allow LESS with escaped function argument', () => {
       // jscs:disable
       var str = `.a {
   .border(~"border linear .2s");
@@ -418,6 +416,22 @@ a:before { content: "/* ..." }
         }
       ],
       kssBlocks = kssSplitter.getBlocks(str, 'less');
+      expect(kssBlocks).eql(result);
+    });
+
+    it('should split rich PostCSS', () => {
+        var str = `/* Comment
+
+Styleguide 1 */ .test {
+    &::before {
+        content: 'Should work';
+    }
+}`,
+      result = [
+          { kss: '/* Comment\n\nStyleguide 1 */',
+          code: '.test {\n    &::before {\n        content: \'Should work\';\n    }\n}' }
+      ],
+      kssBlocks = kssSplitter.getBlocks(str, 'css', 'postcss');
       expect(kssBlocks).eql(result);
     });
   });

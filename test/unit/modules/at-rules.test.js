@@ -1,10 +1,8 @@
-var requireModule = require('requirefrom')('lib/modules'),
-    chai = require('chai'),
-    expect = chai.expect,
-    atRules = requireModule('at-rules');
+import { expect } from 'chai';
+import atRules from '~/lib/modules/at-rules';
 
-describe('At ruke parsing', function() {
-  it('should get @font-face definitions', function() {
+describe('At ruke parsing', () => {
+  it('should get @font-face definitions', () => {
     var str = `@font-face {
   font-family: myFont;
 }
@@ -18,7 +16,7 @@ describe('At ruke parsing', function() {
     expect(atRules.stylesFromString(str)).to.eql(result);
   });
 
-  it('should get @keyframe definitions', function() {
+  it('should get @keyframe definitions', () => {
     var str = `@-webkit-keyframes mymove {
 
 }

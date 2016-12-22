@@ -1,10 +1,26 @@
-var chai = require('chai'),
-    expect = chai.expect,
-    gonzales = require('gonzales-pe');
+import { expect } from 'chai';
+import gonzales from 'gonzales-pe';
 
 describe('Gonzales', function() {
 
   var ast;
+
+  describe('CSS', () => {
+
+    it('Should parse @supports', () => {
+      var str = `@supports (--foo: green) {
+        body {
+          color: green;
+        }
+        }`;
+
+      ast = gonzales.parse(str, {
+        syntax: 'css'
+      });
+      expect(ast).to.be.an('object');
+    });
+
+  });
 
   describe('SASS', function() {
 
@@ -47,6 +63,32 @@ describe('Gonzales', function() {
       });
       expect(ast).to.be.an('object');
     });
+
+    it('Should take !optional', ()=> {
+      var str = `
+.foo { color: Red; }
+
+.bar { @extend .foo; }
+
+.foobar { @extend .foo !optional; }
+`;
+
+      ast = gonzales.parse(str, {
+        syntax: 'scss'
+      });
+      expect(ast).to.be.an('object');
+    });
+
+    it('Should take variable definition inside mixin', ()=> {
+      var str =`@mixin flex-direction($value: row) {
+$value-2009: $value;
+}`;
+      ast = gonzales.parse(str, {
+        syntax: 'scss'
+      });
+      expect(ast).to.be.an('object');
+    });
+
   });
 
   describe('LESS', function() {

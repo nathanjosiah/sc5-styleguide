@@ -10,3 +10,6 @@ phantomjs.log
 coverage
 .idea
 .DS_Store
+/.settings/
+/.buildpath
+/.project
